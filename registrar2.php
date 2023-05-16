@@ -1,12 +1,21 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/maps/resource/php/class/core/init.php';
 isLogin();
-$viewtable = new viewtable();
-$user = new user();
-isRegistrar($user->data()->groups);
-$import = new import();
-$view = new view();
- ?>
+
+if (!empty($_GET['year'])){
+  $viewtable = new viewtable();
+  $user = new user();
+  isRegistrar($user->data()->groups);
+  $import = new import();
+  if(!empty($_GET['campus'])){
+    $view = new view($_GET['year'], $_GET['campus']);
+  }else{
+    $view = new view($_GET['year']);
+  }
+}else{
+  header('Location: registrar.php');
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -115,6 +124,24 @@ $view = new view();
           <div class="container-fluid p-5">
             <div class="row">
               <div class="col-md p-5 content">
+                  <div class="dropdown">
+                    Show data from: 
+                    <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php
+                      if(!empty($_GET['campus'])){
+                        echo "CEU ".$_GET['campus'];
+                      }else{
+                        echo "All Campus";
+                      }
+                    ?>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <li><a class="dropdown-item" href="registrar2.php?year=<?php echo $_GET['year'];?>">All Campus</a></li>
+                      <li><a class="dropdown-item" href="registrar2.php?year=<?php echo $_GET['year'];?>&campus=Manila">CEU Manila</a></li>
+                      <li><a class="dropdown-item" href="registrar2.php?year=<?php echo $_GET['year'];?>&campus=Makati">CEU Makati</a></li>
+                      <li><a class="dropdown-item" href="registrar2.php?year=<?php echo $_GET['year'];?>&campus=Malolos">CEU Malolos</a></li>  
+                    </ul>
+                  </div>
                 <?php require "maps.php"; ?>
               </div>
             </div>

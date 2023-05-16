@@ -551,39 +551,6 @@ function deptImage(){
 
 }
 
-// function holdAccounting(){
-//     if(!empty($_GET['hold']) && !empty($_POST['remarks'])){
-//         $hold = new hold($_GET['hold'],$_POST['remarks']);
-//         if($hold->holdClearanceAccounting()){
-//             echo '<script>alert("Successfully updated, please click back.")</script>';
-//         } else{
-//             echo "Error in holding";
-//         }
-//     }
-// }
-
-// function holdDepartment(){
-//     if(!empty($_GET['hold']) && !empty($_POST['remarks'])){
-//         $hold = new hold($_GET['hold'],$_POST['remarks']);
-//         if($hold->holdClearanceDepartment()){
-//             echo '<script>alert("Successfully updated, please click back.")</script>';
-//         } else{
-//             echo "Error in holding";
-//         }
-//     }
-// }
-
-// function holdLibrary(){
-//     if(!empty($_GET['hold']) && !empty($_POST['remarks'])){
-//         $hold = new hold($_GET['hold'],$_POST['remarks']);
-//         if($hold->holdClearanceLibrary()){
-//             echo '<script>alert("Successfully updated, please click back.")</script>';
-//         } else{
-//             echo "Error in holding";
-//         }
-//     }
-// }
-
 function countManila(){
             $config = new config;
             $con = $config->con();
