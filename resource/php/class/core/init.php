@@ -4,10 +4,10 @@ session_start();
 $GLOBALS['config'] = array(
     'mysql'=>array(
         // hostinger
-        // 'host' => '109.106.254.187',
-        // 'username' =>'ceumnlre_root',
-        // 'password' =>'Eg5c272klko5',
-        // 'db'=>'ceumnlre_ecle'
+         //'host' => '109.106.254.187',
+         //'username' =>'ceumnlre_root',
+         //'password' =>'Eg5c272klko5',
+         //'db'=>'ceumnlre_maps'
 
         //localhost
         'host' => '127.0.0.1:3306',
