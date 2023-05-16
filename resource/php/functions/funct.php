@@ -551,43 +551,10 @@ function deptImage(){
 
 }
 
-// function holdAccounting(){
-//     if(!empty($_GET['hold']) && !empty($_POST['remarks'])){
-//         $hold = new hold($_GET['hold'],$_POST['remarks']);
-//         if($hold->holdClearanceAccounting()){
-//             echo '<script>alert("Successfully updated, please click back.")</script>';
-//         } else{
-//             echo "Error in holding";
-//         }
-//     }
-// }
-
-// function holdDepartment(){
-//     if(!empty($_GET['hold']) && !empty($_POST['remarks'])){
-//         $hold = new hold($_GET['hold'],$_POST['remarks']);
-//         if($hold->holdClearanceDepartment()){
-//             echo '<script>alert("Successfully updated, please click back.")</script>';
-//         } else{
-//             echo "Error in holding";
-//         }
-//     }
-// }
-
-// function holdLibrary(){
-//     if(!empty($_GET['hold']) && !empty($_POST['remarks'])){
-//         $hold = new hold($_GET['hold'],$_POST['remarks']);
-//         if($hold->holdClearanceLibrary()){
-//             echo '<script>alert("Successfully updated, please click back.")</script>';
-//         } else{
-//             echo "Error in holding";
-//         }
-//     }
-// }
-
 function countManila(){
             $config = new config;
             $con = $config->con();
-            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Manila'";
+            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Manila' && `referenceID` LIKE 'A2023%'";
             $data = $con-> prepare($sql);
             $data ->execute();
             $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
@@ -596,7 +563,7 @@ function countManila(){
 function countMalolos(){
             $config = new config;
             $con = $config->con();
-            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Malolos'";
+            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Malolos' && `referenceID` LIKE 'A2023%'";
             $data = $con-> prepare($sql);
             $data ->execute();
             $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
@@ -605,7 +572,7 @@ function countMalolos(){
 function countMakati(){
             $config = new config;
             $con = $config->con();
-            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Makati'";
+            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Makati' && `referenceID` LIKE 'A2023%'";
             $data = $con-> prepare($sql);
             $data ->execute();
             $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 

@@ -3,7 +3,6 @@
     isLogin();
     $viewtable = new viewtable();
     $user = new user();
-    $view = new view();
     isRegistrar($user->data()->groups);
     ?>
 
@@ -43,7 +42,13 @@
             // property by default. See API docs for 'joinBy' for more info on linking
             // data and map.
             const data = [
-                <?php $view->getdata();?>
+                <?php 
+                    if(!empty($_GET['campus'])){
+                        $view->getdataC();
+                    }
+                    else{
+                        $view->getdata();
+                    }?>
 
         // ['ph-au', 10],['ph-bu', 10],['ph-pm', 10],['ph-ba', 10],['ph-ne', 10],['ph-tr', 10],['ph-zm', 10],['ph-7017', 10],['ph-7018', 10],
      
@@ -56,7 +61,14 @@
         },
 
         title: {
-            text: 'Centro Escolar University Admission Demographics'
+            <?php
+                if(!empty($_GET['campus'])){
+                    echo "text: 'Centro Escolar University $_GET[campus] Admission Demographics'";
+                }
+                else{
+                    echo "text: 'Centro Escolar University Admission Demographics'";
+                }
+            ?>
         },
 
         subtitle: {
@@ -102,10 +114,14 @@
 <div class="text-center mt-5 pt-5"><h5> Top 20 Cities / Municipalities / Districts with Most Number of Applicants</h5></div>
 
 <canvas id="chart_locations" style="width:100%; max-width:750px;  display:block; margin:0 auto;"></canvas>
-
-<div class="text-center mt-5 pt-5"><h5> Number of Applicants per Campus</h5></div>
-
-<canvas id="chart_campus" style="width:100%; max-width:500px; max-height:50%; display:block; margin:0 auto;"></canvas>
+<?php
+    if(!empty($_GET['campus'])){
+        echo"<div class='text-center mt-5 pt-5'><h5> Number of Applicants per Campus for Admission Year ".ltrim($_GET['year'],'A')."</h5></div>";
+        echo"<canvas id='chart_campus' style='width:100%; max-width:500px; max-height:50%; display:block; margin:0 auto;'></canvas>";
+    }else{
+        // do nothing
+    }
+?>
 
 <?php $view->chartDataCampus(); ?>
 
@@ -115,7 +131,12 @@
       new Chart(schoolbar, {
         type: 'horizontalBar',
         data: {
-          labels: <?php echo'["' . implode('", "', $view->chartDataLocation()) . '"]' ?>,
+          labels: <?php 
+                    if(!empty($_GET['campus'])){
+                        echo'["' . implode('", "', $view->chartDataLocationC()) . '"]';
+                    }else{
+                        echo'["' . implode('", "', $view->chartDataLocation()) . '"]';
+                    }?>,
           datasets: [{
             label: 'Number of Applicants',
             data: <?php echo '[' . implode(', ', $view->chartDataCount()) . ']' ?>,
