@@ -115,7 +115,7 @@ $view = new view();
           <div class="container-fluid p-5">
             <div class="row">
               <div class="col-md p-5 content">
-                <?php require "maps.php"; ?>
+                <?php require "maps2.php"; ?>
               </div>
             </div>
           </div>
