@@ -1,0 +1,72 @@
+*{
+  margin:0;
+  padding:0;
+  font-family: 'Montserrat', "sans-serif";
+}
+
+html{
+  background-color: white;
+  color:#555;
+  font-family: "Montserrat", "sans-serif";
+  font-size: 20px;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+header{
+  min-height: 100vh;
+  background-image: linear-gradient(rgba(36, 18, 95, .95),rgba(220, 47, 156, .8)),url("../img/ceubg.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.navbar{
+  width: 100%;
+  background: rgba(28, 28, 28, .6);
+  animation: nav-load var(--nav-load-time) ease-in;
+}
+
+.logo{
+  height: 50px;
+}
+
+.fab{
+  color:#fff;
+}
+
+.navbar-nav{
+  text-align: right;
+}
+
+.logo2{
+  height: 100px;
+  width: 100%;
+}
+select{
+  width: 100%;
+}
+.content{
+  height: 100%;
+  border-radius: 20px;
+  border-collapse: collapse;
+  box-shadow: 0 0 5px .1px #000;
+  background: rgba(33,29,41, .8);
+  color: #fff;
+}
+.button-submit{
+  width: 600px;
+  border-radius: 5px;
+}
+.button-back {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  font-size: 15px;
+  text-decoration: underline;
+
+  color: #fff;
+}
+.button-back:hover {
+  background-color: transparent;
+}
