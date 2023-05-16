@@ -126,6 +126,20 @@ class view extends config{
             }
             return $campus;
         }
+        public function showYear(){
+            $config = new config;
+            $con = $config->con();
+            $sql = "SELECT DISTINCT LEFT(`referenceID`,5) AS year FROM `tbl_map_info`";
+            $data = $con-> prepare($sql);
+            $data ->execute();
+            $rows =$data-> fetchAll(PDO::FETCH_ASSOC);
+            // var_dump($rows);
+            // die();
+            foreach($rows as $row){
+              echo '<a href="registrar2.php?year='.$row['year'].'" class="sub-item border-bottom" value="'.$row['year'].'">
+                  '.$row['year'].'</a>';
+           }
+        }
 
         public function chartDataCampusCount(){
             $config = new config;

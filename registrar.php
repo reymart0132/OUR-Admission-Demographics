@@ -5,6 +5,7 @@ $viewtable = new viewtable();
 $user = new user();
 isRegistrar($user->data()->groups);
 $import = new import();
+$view = new view();
  ?>
 
 <!DOCTYPE html>
@@ -43,13 +44,12 @@ $import = new import();
             </div>
 
             <!-- requests -->
-            <!-- <div class="item">
-              <a class="sub-btn"><i class="fa-solid fa-tag"></i>Requests<i class="fas fa-chevron-right dropdown"></i></a>
+            <div class="item">
+              <a class="sub-btn" style="font-size:80%"><i class="fa fa-calendar"></i>Admission Year<i class="fas fa-chevron-right dropdown"></i></a>
               <div class="sub-menu">
-                <a href="regs-req-tr.php" name="Rtransfer" class="sub-item border-bottom" value="Transfer">
-                  Transfer <?php //echo '<span class="badge badge-danger">'.$viewtable->viewCountPendingRegistrarTR(). '</span>';?> </a> 
-                <a href="regs-req-gd.php" name="Rgraduate" class="sub-item" value="Graduate">
-                  Graduate <?php //echo '<span class="badge badge-danger">'.$viewtable->viewCountPendingRegistrarGD(). '</span>';?> </a> 
+                <?php
+                $view->showYear();
+                ?>
               </div>
             </div>
 
