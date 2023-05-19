@@ -139,7 +139,13 @@
                     }?>,
           datasets: [{
             label: 'Number of Applicants',
-            data: <?php echo '[' . implode(', ', $view->chartDataCount()) . ']' ?>,
+            data: <?php 
+                    if(!empty($_GET['campus'])){
+                        echo '[' . implode(', ', $view->chartDataCountC()) . ']';
+                    }else{
+                        echo '[' . implode(', ', $view->chartDataCount()) . ']';
+                    }     
+                ?>,
             backgroundColor: [
               'rgb(43, 58, 85)',
               'rgb(43, 58, 85)',
