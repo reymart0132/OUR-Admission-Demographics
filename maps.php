@@ -1,12 +1,3 @@
-<?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/maps/resource/php/class/core/init.php';
-    isLogin();
-    $viewtable = new viewtable();
-    $user = new user();
-    isRegistrar($user->data()->groups);
-    ?>
-
-
 <style>
     #container {
         height: 100vh;
@@ -22,13 +13,13 @@
 }
 </style>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-<div id="container"></div>
+<div id="container"></div> <!-- Target Container for MAP -->
 
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -62,11 +53,12 @@
 
         title: {
             <?php
+                $AdmYear = ltrim($_GET['year'],"A");
                 if(!empty($_GET['campus'])){
-                    echo "text: 'Centro Escolar University $_GET[campus] Admission Demographics'";
+                    echo "text: 'Centro Escolar University $_GET[campus] Admission Demographics for Admission Year $AdmYear'";
                 }
                 else{
-                    echo "text: 'Centro Escolar University Admission Demographics'";
+                    echo "text: 'Centro Escolar University Admission Demographics for <br> Admission Year $AdmYear'";
                 }
             ?>
         },
@@ -111,19 +103,32 @@
 })();
 
 </script>
-<div class="text-center mt-5 pt-5"><h5> Top 20 Cities / Municipalities / Districts with Most Number of Applicants</h5></div>
+<div class="text-center mt-5 pt-5"><h5> Top 20 Cities / Municipalities / Provinces with Most Number of Applicants 
 
+    <?php 
+        if(!empty($_GET['campus'])){
+            echo "for CEU ".$_GET['campus']; 
+        }else{ 
+            // display nothing
+        }
+    ?></h5></div>
+
+    
 <canvas id="chart_locations" style="width:100%; max-width:750px;  display:block; margin:0 auto;"></canvas>
+
 <?php
     if(!empty($_GET['campus'])){
-        echo"<div class='text-center mt-5 pt-5'><h5> Number of Applicants per Campus for Admission Year ".ltrim($_GET['year'],'A')."</h5></div>";
-        echo"<canvas id='chart_campus' style='width:100%; max-width:500px; max-height:50%; display:block; margin:0 auto;'></canvas>";
-    }else{
-        // do nothing
+        echo "<div class='text-center mt-5 pt-5'><h5> Top 50 Districts with Most Number of Applicants ";
+ 
+        if(!empty($_GET['campus'])){
+            echo "for CEU ".$_GET['campus']; 
+        }else{ 
+            // display nothing
+        }
+
+        echo "</h5></div><canvas id='chart_locations_districts' style='width:100%; max-width:900px; display:block; margin:0 auto;'></canvas>";
     }
 ?>
-
-<?php $view->chartDataCampus(); ?>
 
 <script>
       const schoolbar = document.getElementById('chart_locations');
@@ -139,7 +144,13 @@
                     }?>,
           datasets: [{
             label: 'Number of Applicants',
-            data: <?php echo '[' . implode(', ', $view->chartDataCount()) . ']' ?>,
+            data: <?php 
+                    if(!empty($_GET['campus'])){
+                        echo '[' . implode(', ', $view->chartDataCountC()) . ']';
+                    }else{
+                        echo '[' . implode(', ', $view->chartDataCount()) . ']';
+                    }     
+                ?>,
             backgroundColor: [
               'rgb(43, 58, 85)',
               'rgb(43, 58, 85)',
@@ -161,6 +172,93 @@
               'rgb(43, 58, 85)',
               'rgb(43, 58, 85)',
               'rgb(43, 58, 85)',
+
+            //   'rgb(206, 119, 119)',
+            //   'rgb(232, 196, 196)',
+            //   'rgb(242, 229, 229)',
+            //   'rgb(255, 115, 29)',
+            //   'rgb(95, 157, 247)',
+            //   'rgb(232, 196, 196)',
+            //   'rgb(242, 229, 229)'
+            ],
+          }]
+        },
+        options: {
+        aspectRatio: 1,
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+        }
+      });
+    </script>
+
+
+<script>
+      const schoolbar2 = document.getElementById('chart_locations_districts');
+
+      new Chart(schoolbar2, {
+        type: 'horizontalBar',
+        data: {
+          labels: <?php echo'["' . implode('", "', $view->chartDataLocationD()) . '"]'; ?>,
+          datasets: [{
+            label: 'Number of Applicants',
+            data: <?php echo '[' . implode(', ', $view->chartDataCountD()) . ']'; ?>,
+            backgroundColor: [
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+              'rgb(43, 58, 85)',
+
 
 
             //   'rgb(206, 119, 119)',
@@ -174,46 +272,13 @@
           }]
         },
         options: {
+        aspectRatio: 0.5,
           scales: {
               xAxes: [{
                   ticks: {
                       beginAtZero: true
                   }
               }]
-          }
-        }
-      });
-    </script>
-
-<script>
-      const campusbar = document.getElementById('chart_campus');
-
-      new Chart(campusbar, {
-        type: 'pie',
-        data: {
-          labels: ['Manila', 'Makati', 'Malolos'],
-          datasets: [{
-            label: 'Number of Applicants',
-            data: <?php echo "['".countManila()."', '".countMakati()."', '".countMalolos()."']" ?>,
-            backgroundColor: [
-            //  'rgb(43, 58, 85)',
-               'rgb(206, 119, 119)',
-               'rgb(232, 196, 196)',
-               'rgb(242, 229, 229)',
-            //   'rgb(255, 115, 29)',
-            //   'rgb(95, 157, 247)',
-            //   'rgb(232, 196, 196)',
-            //   'rgb(242, 229, 229)'
-            ],
-          }]
-        },
-        options: {
-          scales: {
-            //   xAxes: [{
-            //       ticks: {
-            //           beginAtZero: true
-            //       }
-            //   }]
           }
         }
       });

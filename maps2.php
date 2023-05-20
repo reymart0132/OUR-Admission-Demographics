@@ -116,7 +116,7 @@
           labels: ['Manila', 'Makati', 'Malolos'],
           datasets: [{
             label: 'Number of Applicants',
-            data: <?php echo "['".countManila()."', '".countMakati()."', '".countMalolos()."']" ?>,
+            data: <?php echo "['".$view->countManila()."', '".$view->countMakati()."', '".$view->countMalolos()."']" ?>,
             backgroundColor: [
             //  'rgb(43, 58, 85)',
                'rgb(206, 119, 119)',
