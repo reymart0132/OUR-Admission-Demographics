@@ -551,31 +551,4 @@ function deptImage(){
 
 }
 
-function countManila(){
-            $config = new config;
-            $con = $config->con();
-            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Manila' && `referenceID` LIKE 'A2023%'";
-            $data = $con-> prepare($sql);
-            $data ->execute();
-            $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
-            return $rows[0]['count'];
-        }
-function countMalolos(){
-            $config = new config;
-            $con = $config->con();
-            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Malolos' && `referenceID` LIKE 'A2023%'";
-            $data = $con-> prepare($sql);
-            $data ->execute();
-            $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
-            return $rows[0]['count'];
-        }
-function countMakati(){
-            $config = new config;
-            $con = $config->con();
-            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Makati' && `referenceID` LIKE 'A2023%'";
-            $data = $con-> prepare($sql);
-            $data ->execute();
-            $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
-            return $rows[0]['count'];
-        }
  ?>

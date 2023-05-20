@@ -27,12 +27,14 @@ class view extends config{
         public function chartDataLocation(){
             $config = new config;
             $con = $config->con();
-            $sql = "SELECT x.subprob, x.place, sum(x.count) as `count` FROM (SELECT `subprob`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
+            $sql = "SELECT x.subprob, x.area, sum(x.count) as `count` FROM (SELECT `subprob`, `area`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
+            // $sql = "SELECT x.subprob, x.place, sum(x.count) as `count` FROM (SELECT `subprob`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
             $data = $con-> prepare($sql);
             $data ->execute();
             $rows =$data-> fetchAll(PDO::FETCH_ASSOC);
             foreach($rows as $row){
-              $subprob[] = $row['place'];
+              $subprob[] = $row['area'];
+              // $subprob[] = $row['place'];
             }
             return $subprob;
         }
@@ -112,12 +114,13 @@ class view extends config{
         public function chartDataLocationC(){
             $config = new config;
             $con = $config->con();
-            $sql = "SELECT x.subprob, x.place, sum(x.count) as `count` FROM (SELECT `subprob`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' AND `campus`='$this->campus' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
+            $sql = "SELECT x.subprob, x.area, sum(x.count) as `count` FROM (SELECT `subprob`, `area`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' AND `campus`='$this->campus' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
+            // $sql = "SELECT x.subprob, x.place, sum(x.count) as `count` FROM (SELECT `subprob`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' AND `campus`='$this->campus' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
             $data = $con-> prepare($sql);
             $data ->execute();
             $rows =$data-> fetchAll(PDO::FETCH_ASSOC);
             foreach($rows as $row){
-              $subprob[] = $row['place'];
+              $subprob[] = $row['area'];
             }
             return $subprob;
         }
@@ -126,6 +129,68 @@ class view extends config{
             $config = new config;
             $con = $config->con();
             $sql = "SELECT x.subprob, x.place, sum(x.count) as `count` FROM (SELECT `subprob`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' AND `campus`='$this->campus' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC) x GROUP BY x.subprob ORDER BY `count` DESC LIMIT 20";
+            $data = $con-> prepare($sql);
+            $data ->execute();
+            $rows =$data-> fetchAll(PDO::FETCH_ASSOC);
+            foreach($rows as $row){
+              $count[] = $row['count'];
+            }
+            return $count;
+        }
+ 
+        // Pie Chart Data -------------------------------------------------------------------------------------------------------------------------------------
+        public function countManila(){
+            $config = new config;
+            $con = $config->con();
+            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Manila'";
+            // $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Manila' && `referenceID` LIKE '$this->year'";
+            $data = $con-> prepare($sql);
+            $data ->execute();
+            $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
+            return $rows[0]['count'];
+        }
+
+        public function countMalolos(){
+            $config = new config;
+            $con = $config->con();
+            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Malolos'";
+            // $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Malolos' && `referenceID` LIKE '$this->year'";
+            $data = $con-> prepare($sql);
+            $data ->execute();
+            $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
+            return $rows[0]['count'];
+        }
+
+        public function countMakati(){
+            $config = new config;
+            $con = $config->con();
+            $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Makati'";
+            // $sql = "SELECT count(*) AS `count` from tbl_map_info WHERE `campus` = 'Makati' && `referenceID` LIKE '$this->year'";
+            $data = $con-> prepare($sql);
+            $data ->execute();
+            $rows =$data-> fetchAll(PDO::FETCH_ASSOC); 
+            return $rows[0]['count'];
+        }
+
+        // Chart Data - Districts------------------------------------------------------------------------------------------------------------------------------------
+
+        public function chartDataLocationD(){
+            $config = new config;
+            $con = $config->con();
+            $sql = "SELECT `subprob`, `area`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' AND `campus`='$this->campus' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC LIMIT 50";
+            $data = $con-> prepare($sql);
+            $data ->execute();
+            $rows =$data-> fetchAll(PDO::FETCH_ASSOC);
+            foreach($rows as $row){
+              $subprob[] = $row['place']." (".$row['area'].")";
+            }
+            return $subprob;
+        }
+
+        public function chartDataCountD(){
+            $config = new config;
+            $con = $config->con();
+            $sql = "SELECT `subprob`, `area`, `place`, count(*)as `count` FROM tbl_map_info INNER JOIN tbl_zipcode ON tbl_map_info.zipCode = tbl_zipcode.zipCode WHERE `referenceID` LIKE '$this->year' AND `campus`='$this->campus' GROUP BY tbl_zipcode.zipCode ORDER BY `count` DESC LIMIT 50";
             $data = $con-> prepare($sql);
             $data ->execute();
             $rows =$data-> fetchAll(PDO::FETCH_ASSOC);
